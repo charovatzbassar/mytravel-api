@@ -37,7 +37,11 @@ public class AuthFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
         HttpServletResponse httpResponse = (HttpServletResponse) servletResponse;
 
-        if (httpRequest.getHeader("Authentication").isEmpty()) throw new RuntimeException("Unauthorized");
+        if (httpRequest.getHeader("Authentication").isEmpty()) {
+            httpResponse.setStatus(401);
+            httpResponse.getWriter().write("Unauthorized");
+            return;
+        }
 
         String token = httpRequest.getHeader("Authentication");
 

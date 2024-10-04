@@ -39,7 +39,9 @@ public class LocationFilter implements Filter {
         long userId = Long.parseLong((String) httpRequest.getAttribute("userId"));
 
         if (userId != location.getUser().getUserId()) {
-            throw new RuntimeException("You are not allowed to alter this location!");
+            httpResponse.setStatus(403);
+            httpResponse.getWriter().write("You are not allowed to do this!");
+            return;
         }
 
         filterChain.doFilter(servletRequest, servletResponse);

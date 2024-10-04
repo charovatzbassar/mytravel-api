@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 
 @Service
-public class LocationService implements BaseService<Location, LocationDto, Long> {
+public class LocationService  {
     private final LocationRepository locationRepository;
     private final UserService userService;
     private final ImageService imageService;
@@ -31,7 +31,6 @@ public class LocationService implements BaseService<Location, LocationDto, Long>
         this.imageService = imageService;
     }
 
-    @Override
     public List<Location> getAll() {
         try {
             return locationRepository.findAll();
@@ -49,16 +48,13 @@ public class LocationService implements BaseService<Location, LocationDto, Long>
         }
     }
 
-    @Override
     public Location getById(Long id) {
         return locationRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Location"));
     }
 
-    @Override
-    public Location create(LocationDto data) {
-        User user = userService.getById(data.getUserId());
 
-        if (user == null) throw new EntityNotFoundException("User");
+    public Location create(LocationDto data, Long userId) {
+        User user = userService.getById(userId);
 
         Location location = new Location();
         location.setLocationName(data.getLocationName());
@@ -67,14 +63,14 @@ public class LocationService implements BaseService<Location, LocationDto, Long>
         location.setCreatedAt(new Date());
         location.setUser(user);
 
-        List<Image> images = new ArrayList<>();
-
-        for (String img : data.getImages()) {
-            Image image = imageService.create(img, location);
-            images.add(image);
-        }
-
-        location.setImages(images);
+//        List<Image> images = new ArrayList<>();
+//
+//        for (String img : data.getImages()) {
+//            Image image = imageService.create(img, location);
+//            images.add(image);
+//        }
+//
+//        location.setImages(images);
 
         try {
             return locationRepository.save(location);
@@ -83,11 +79,9 @@ public class LocationService implements BaseService<Location, LocationDto, Long>
         }
     }
 
-    @Override
-    public Location update(Long id, LocationDto data) {
-        User user = userService.getById(data.getUserId());
 
-        if (user == null) throw new EntityNotFoundException("User");
+    public Location update(Long id, LocationDto data, Long userId) {
+        User user = userService.getById(userId);
 
         Optional<Location> existingLocationOpt = locationRepository.findById(id);
 
@@ -107,15 +101,13 @@ public class LocationService implements BaseService<Location, LocationDto, Long>
         }
     }
 
-    @Override
     public Location delete(Long id) {
-        // only the user who created can delete
         Optional<Location> location = locationRepository.findById(id);
 
         if (location.isEmpty()) throw new EntityNotFoundException("Location");
 
         try {
-            locationRepository.delete(location.get());
+            locationRepository.deleteById(id);
             return location.get();
         } catch (Exception e) {
             throw new DBException("Could not delete location!");

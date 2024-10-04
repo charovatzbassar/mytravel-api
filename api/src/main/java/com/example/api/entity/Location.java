@@ -32,7 +32,7 @@ public class Location {
     @Column(name = "long")
     private Double lng;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.PERSIST})
     @JoinColumn(name = "user_id")
     private User user;
 

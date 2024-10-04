@@ -15,20 +15,15 @@ public class LocationDto {
     @NotNull
     private Double lng;
 
-    @NotNull
-    private Long userId;
-
-    @NotNull
-    private List<String> images;
+//    @NotNull
+//    private List<String> images;
 
     public LocationDto() {}
 
-    public LocationDto(String locationName, Double lat, Double lng, Long userId, List<String> images) {
+    public LocationDto(String locationName, Double lat, Double lng) {
         this.locationName = locationName;
         this.lat = lat;
         this.lng = lng;
-        this.userId = userId;
-        this.images = images;
     }
 
     public @NotNull String getLocationName() {
@@ -56,21 +51,13 @@ public class LocationDto {
         this.lng = lng;
     }
 
-    public @NotNull Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(@NotNull Long userId) {
-        this.userId = userId;
-    }
-
-    public @NotNull List<String> getImages() {
-        return images;
-    }
-
-    public void setImages(@NotNull List<String> images) {
-        this.images = images;
-    }
+//    public @NotNull List<String> getImages() {
+//        return images;
+//    }
+//
+//    public void setImages(@NotNull List<String> images) {
+//        this.images = images;
+//    }
 
     @Override
     public String toString() {
@@ -78,8 +65,6 @@ public class LocationDto {
                 "locationName='" + locationName + '\'' +
                 ", lat=" + lat +
                 ", lng=" + lng +
-                ", userId=" + userId +
-                ", images=" + images +
                 '}';
     }
 }

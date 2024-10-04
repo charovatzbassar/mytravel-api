@@ -40,13 +40,16 @@ public class LocationController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Location> create(@Valid @RequestBody LocationDto data) {
-        return ResponseEntity.ok(locationService.create(data));
+    public ResponseEntity<Location> create(@Valid @RequestBody LocationDto data, HttpServletRequest request) {
+        long userId = Long.parseLong((String) request.getAttribute("userId"));
+        return ResponseEntity.ok(locationService.create(data, userId));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Location> update(@Valid @RequestBody LocationDto data, @PathVariable Long id) {
-        return ResponseEntity.ok(locationService.update(id, data));
+    public ResponseEntity<Location> update(@Valid @RequestBody LocationDto data, @PathVariable Long id, HttpServletRequest request) {
+        long userId = Long.parseLong((String) request.getAttribute("userId"));
+
+        return ResponseEntity.ok(locationService.update(id, data, userId));
     }
 
     @DeleteMapping("/{id}")
