@@ -1,7 +1,8 @@
 package com.example.api.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import java.util.Date;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
 
 public class LocationDto {
@@ -14,9 +15,6 @@ public class LocationDto {
 
     @NotNull
     private Double lng;
-
-//    @NotNull
-//    private List<String> images;
 
     public LocationDto() {}
 
@@ -50,14 +48,6 @@ public class LocationDto {
     public void setLng(@NotNull Double lng) {
         this.lng = lng;
     }
-
-//    public @NotNull List<String> getImages() {
-//        return images;
-//    }
-//
-//    public void setImages(@NotNull List<String> images) {
-//        this.images = images;
-//    }
 
     @Override
     public String toString() {

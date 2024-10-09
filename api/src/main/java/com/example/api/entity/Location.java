@@ -32,24 +32,20 @@ public class Location {
     @Column(name = "long")
     private Double lng;
 
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.PERSIST})
+    @ManyToOne(cascade = { CascadeType.DETACH, CascadeType.PERSIST })
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "location", orphanRemoval = true, cascade = CascadeType.ALL)
-    @JsonIgnore
-    private List<Image> images;
 
     public Location() {}
 
-    public Location(Long locationId, String locationName, Date createdAt, Double lat, Double lng, User user, List<Image> images) {
+    public Location(Long locationId, String locationName, Date createdAt, Double lat, Double lng, User user) {
         this.locationId = locationId;
         this.locationName = locationName;
         this.createdAt = createdAt;
         this.lat = lat;
         this.lng = lng;
         this.user = user;
-        this.images = images;
     }
 
     public Long getLocationId() {
@@ -100,14 +96,6 @@ public class Location {
         this.user = user;
     }
 
-    public List<Image> getImages() {
-        return images;
-    }
-
-    public void setImages(List<Image> images) {
-        this.images = images;
-    }
-
     @Override
     public String toString() {
         return "Location{" +
@@ -117,7 +105,6 @@ public class Location {
                 ", lat=" + lat +
                 ", lng=" + lng +
                 ", user=" + user +
-                ", images=" + images +
                 '}';
     }
 }

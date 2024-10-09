@@ -8,9 +8,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -40,7 +45,10 @@ public class LocationController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Location> create(@Valid @RequestBody LocationDto data, HttpServletRequest request) {
+    public ResponseEntity<Location> create(
+            @Valid @RequestBody LocationDto data,
+            HttpServletRequest request
+    ) {
         long userId = Long.parseLong((String) request.getAttribute("userId"));
         return ResponseEntity.ok(locationService.create(data, userId));
     }
@@ -48,7 +56,6 @@ public class LocationController {
     @PutMapping("/{id}")
     public ResponseEntity<Location> update(@Valid @RequestBody LocationDto data, @PathVariable Long id, HttpServletRequest request) {
         long userId = Long.parseLong((String) request.getAttribute("userId"));
-
         return ResponseEntity.ok(locationService.update(id, data, userId));
     }
 

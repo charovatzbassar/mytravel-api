@@ -1,7 +1,6 @@
 package com.example.api.service;
 
 import com.example.api.dto.LocationDto;
-import com.example.api.entity.Image;
 import com.example.api.entity.Location;
 import com.example.api.entity.User;
 import com.example.api.exception.DBException;
@@ -10,25 +9,20 @@ import com.example.api.repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 @Service
 public class LocationService  {
     private final LocationRepository locationRepository;
     private final UserService userService;
-    private final ImageService imageService;
 
     @Autowired
-    public LocationService(LocationRepository locationRepository, UserService userService, ImageService imageService) {
+    public LocationService(LocationRepository locationRepository, UserService userService) {
         this.locationRepository = locationRepository;
         this.userService = userService;
-        this.imageService = imageService;
     }
 
     public List<Location> getAll() {
@@ -63,14 +57,6 @@ public class LocationService  {
         location.setCreatedAt(new Date());
         location.setUser(user);
 
-//        List<Image> images = new ArrayList<>();
-//
-//        for (String img : data.getImages()) {
-//            Image image = imageService.create(img, location);
-//            images.add(image);
-//        }
-//
-//        location.setImages(images);
 
         try {
             return locationRepository.save(location);
